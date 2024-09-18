@@ -2,9 +2,26 @@ import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 from config import Config
+import MySQLdb
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+def create_database_if_not_exists():
+    # Connect to MySQL server
+    conn = MySQLdb.connect(
+        host=app.config['MYSQL_HOST'],
+        user=app.config['MYSQL_USER'],
+        password=app.config['MYSQL_PASSWORD']
+    )
+    cursor = conn.cursor()
+    # Create database if it does not exist
+    cursor.execute(f"CREATE DATABASE IF NOT EXISTS {app.config['MYSQL_DB']}")
+    cursor.close()
+    conn.close()
+
+# Create the database if not exists
+create_database_if_not_exists()
 
 # Initialize MySQL
 mysql = MySQL(app)

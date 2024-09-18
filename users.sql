@@ -1,0 +1,11 @@
+CREATE DATABASE myDb;
+
+USE myDb;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    country VARCHAR(100)
+);
